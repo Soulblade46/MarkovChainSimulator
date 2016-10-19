@@ -2,6 +2,7 @@ import g4p_controls.*; //<>// //<>//
 import java.awt.Font;
 
 final int N=3;
+final int prob_tot=100;
 
 /*int[][] markov = {
   {60, 40}, //state 0 (total 100%)
@@ -36,7 +37,7 @@ void setup()
   {
     for (int j=0;j<markov[0].length;j++)
     {
-      markov[i][j]=33;
+      markov[i][j]=prob_tot/N;
     }
   }
   tmr.start();
@@ -59,7 +60,8 @@ void mousePressed() {
 
 
 void changeMarkovState() {
-  float rnd = random(100.0); //rnd 100 for a 100% range
+  //float rnd = random(100.0); //rnd 100 for a 100% range//commentato da me
+  float rnd = random((float)prob_tot);//aggiunto da me
   float range = 0;
   
 
