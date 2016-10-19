@@ -1,7 +1,7 @@
 import g4p_controls.*; //<>// //<>//
 import java.awt.Font;
 
-final int N=3;
+int N=3;
 final int prob_tot=100;
 
 /*int[][] markov = {
@@ -35,10 +35,7 @@ void setup()
   nodo[i]=new Nodo(col_des,col_sel,col_fig_cont); 
   for (int i=0;i<markov[0].length;i++)
   {
-    for (int j=0;j<markov[0].length;j++)
-    {
-      markov[i][j]=prob_tot/N;
-    }
+    markov[i][i]=prob_tot/N;
   }
   tmr.start();
 }
@@ -55,7 +52,8 @@ void draw()
 
 
 void mousePressed() {
-  changeMarkovState();
+  //changeMarkovState();//commentato da me
+  aggiungi_nodo();//aggiunto da me
 }
 
 
@@ -74,6 +72,7 @@ void changeMarkovState() {
       stat[i]++;//aggiunto da me
       break;
     }
+    refresh_tabella(markov);
   }
   //println("Current state: " + state);//commentato da me
   println("Stat: nodo 0= "+stat[0]+" Stat: nodo 1= "+stat[1]+" Stat: nodo 2= "+stat[2]);//aggiunto da me
@@ -87,5 +86,21 @@ void deseleziona_tutti(Oggetto[] ogg)
 void disegna()
 {
   for (int i=0;i<nodo.length;i++)
-  nodo[i].disegna(100+i*50,100,30,30);
+  nodo[i].disegna((width/2)-50+i*50,(height/2),30,30);
+}
+
+void aggiungi_nodo()
+{
+  nodo=(Nodo[])append(nodo,new Nodo(col_des,col_sel,col_fig_cont));
+  for (int i=0;i<markov.length;i++)
+  markov[i]=(int[])append(markov[i],prob_tot/N);
+  refresh_tabella(markov);
+}
+
+void refresh_tabella(int[][] tabella)
+{
+  for (int i=0;i<tabella[0].length;i++)
+  {
+      tabella[i][i]=prob_tot/N;
+  }
 }
