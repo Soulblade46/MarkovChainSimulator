@@ -29,14 +29,26 @@ void setup()
   background(100);
   createGUI();
   nodo=new Nodo[N];
-  markov=new int[N][N];
+  IntList[] markov=new IntList[10];
   stat=new int[N];
   for (int i=0;i<nodo.length;i++)
   nodo[i]=new Nodo(col_des,col_sel,col_fig_cont); 
-  for (int i=0;i<markov[0].length;i++)
+  /*for (int i=0;i<markov[0].size;i++)
   {
-    markov[i][i]=prob_tot/N;
+    for (int j=0;j<markov[0].length;j++)
+    {
+      markov[i][j]=prob_tot/N;
+    }
+  }*/
+  
+  for (int i = 0; i < markov[0].size(); i++) 
+  {
+    for (int j = 0; j < markov[0].size(); j++) 
+    {
+     markov[i].get(j);
+    }
   }
+  
   tmr.start();
 }
 
@@ -72,7 +84,7 @@ void changeMarkovState() {
       stat[i]++;//aggiunto da me
       break;
     }
-    refresh_tabella(markov);
+    //refresh_tabella(markov);
   }
   //println("Current state: " + state);//commentato da me
   println("Stat: nodo 0= "+stat[0]+" Stat: nodo 1= "+stat[1]+" Stat: nodo 2= "+stat[2]);//aggiunto da me
@@ -91,16 +103,22 @@ void disegna()
 
 void aggiungi_nodo()
 {
+  N++;
+  int[][] nuovo=new int[1][N];
+  for (int i=0;i<nodo.length;i++)
+    nuovo[0][i]=prob_tot/N;
   nodo=(Nodo[])append(nodo,new Nodo(col_des,col_sel,col_fig_cont));
-  for (int i=0;i<markov.length;i++)
-  markov[i]=(int[])append(markov[i],prob_tot/N);
+  markov=(int[][])append(markov,nuovo);
   refresh_tabella(markov);
 }
 
 void refresh_tabella(int[][] tabella)
 {
   for (int i=0;i<tabella[0].length;i++)
-  {
-      tabella[i][i]=prob_tot/N;
+  {  
+    for (int j=0;j<tabella[0].length;j++)
+    {
+      tabella[i][j]=prob_tot/N;
+    }
   }
 }
