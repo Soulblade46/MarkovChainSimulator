@@ -27,7 +27,7 @@ public void createGUI(){
   G4P.messagesEnabled(false);
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setCursor(ARROW);
-  surface.setTitle("Sketch Window");
+  surface.setTitle("Markov Chain Simulator");
   tmr = new GTimer(this, this, "timer1_Action1", 1000);
 }
 

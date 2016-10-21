@@ -16,7 +16,7 @@ final int prob_tot=100;
   {35, 25, 40}  //state 2 (total 100%)
 };*/
 
-int[][] markov;
+IntList[] markov;
 
 int[] stat;
 
@@ -29,8 +29,13 @@ void setup()
   background(100);
   createGUI();
   nodo=new Nodo[N];
-  IntList[] markov=new IntList[10];
   stat=new int[N];
+  markov=new IntList[N];
+  for (int i=0;i<markov.length;i++)
+  {
+    markov[i]=new IntList(N);
+  }
+  
   for (int i=0;i<nodo.length;i++)
   nodo[i]=new Nodo(col_des,col_sel,col_fig_cont); 
   /*for (int i=0;i<markov[0].size;i++)
@@ -41,11 +46,14 @@ void setup()
     }
   }*/
   
-  for (int i = 0; i < markov[0].size(); i++) 
+  for (int i = 0; i < markov.length; i++) 
   {
-    for (int j = 0; j < markov[0].size(); j++) 
+    for (int j = 0; j < markov[i].size(); j++) 
     {
-     markov[i].get(j);
+     markov[i].set(j,prob_tot/N);
+     //markov[j].append(prob_tot/N);
+     println(markov[i].get(j));
+     println("OK");
     }
   }
   
@@ -65,11 +73,11 @@ void draw()
 
 void mousePressed() {
   //changeMarkovState();//commentato da me
-  aggiungi_nodo();//aggiunto da me
+  //aggiungi_nodo();//aggiunto da me
 }
 
 
-void changeMarkovState() {
+/*void changeMarkovState() {
   //float rnd = random(100.0); //rnd 100 for a 100% range//commentato da me
   float rnd = random((float)prob_tot);//aggiunto da me
   float range = 0;
@@ -77,6 +85,29 @@ void changeMarkovState() {
 
   for(int i = 0; i < markov[0].length; i++) {
     range += float(markov[state][i]);
+    if(rnd <= range) {
+      state = i; //set the new state
+      deseleziona_tutti(nodo);//aggiunto da me
+      nodo[i].seleziona();//aggiunto da me
+      stat[i]++;//aggiunto da me
+      break;
+    }
+    //refresh_tabella(markov);
+  }
+  //println("Current state: " + state);//commentato da me
+  println("Stat: nodo 0= "+stat[0]+" Stat: nodo 1= "+stat[1]+" Stat: nodo 2= "+stat[2]);//aggiunto da me
+}*/
+
+
+void changeMarkovState()
+{
+  //float rnd = random(100.0); //rnd 100 for a 100% range//commentato da me
+  float rnd = random((float)prob_tot);//aggiunto da me
+  float range = 0;
+  
+
+  for(int i = 0; i < markov[0].size(); i++) {
+    range += float(markov[state].get(i));
     if(rnd <= range) {
       state = i; //set the new state
       deseleziona_tutti(nodo);//aggiunto da me
@@ -101,7 +132,7 @@ void disegna()
   nodo[i].disegna((width/2)-50+i*50,(height/2),30,30);
 }
 
-void aggiungi_nodo()
+/*void aggiungi_nodo()
 {
   N++;
   int[][] nuovo=new int[1][N];
@@ -110,7 +141,7 @@ void aggiungi_nodo()
   nodo=(Nodo[])append(nodo,new Nodo(col_des,col_sel,col_fig_cont));
   markov=(int[][])append(markov,nuovo);
   refresh_tabella(markov);
-}
+}*/
 
 void refresh_tabella(int[][] tabella)
 {
