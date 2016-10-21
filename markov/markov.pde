@@ -33,7 +33,7 @@ void setup()
   markov=new IntList[N];
   for (int i=0;i<markov.length;i++)
   {
-    markov[i]=new IntList(N);
+    markov[i]=new IntList();
   }
   
   for (int i=0;i<nodo.length;i++)
@@ -48,13 +48,9 @@ void setup()
   
   for (int i = 0; i < markov.length; i++) 
   {
-    for (int j = 0; j < markov[i].size(); j++) 
-    {
-     markov[i].set(j,prob_tot/N);
+    for (int j=0; j < N ; j++)
+     markov[i].append(prob_tot/N);
      //markov[j].append(prob_tot/N);
-     println(markov[i].get(j));
-     println("OK");
-    }
   }
   
   tmr.start();
@@ -105,7 +101,6 @@ void changeMarkovState()
   float rnd = random((float)prob_tot);//aggiunto da me
   float range = 0;
   
-
   for(int i = 0; i < markov[0].size(); i++) {
     range += float(markov[state].get(i));
     if(rnd <= range) {
